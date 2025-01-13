@@ -1,9 +1,7 @@
 # FLEX  
 ## Fresh Latest Exclusive
-
-FLEX adalah aplikasi berita yang menyajikan informasi terbaru, segar, dan eksklusif dari berbagai bidang. Dengan tampilan yang simpel dan mudah digunakan, FLEX memungkinkan pengguna untuk mendapatkan berita secara real-time dan fleksibel, kapan saja dan di mana saja. Aplikasi ini menyediakan berbagai kategori berita yang dapat disesuaikan dengan minat pengguna, memberikan wawasan yang relevan dan up-to-date. Dengan fitur personalisasi dan notifikasi, FLEX memastikan setiap informasi yang diterima adalah yang paling penting dan menarik untuk Anda.
-
-## Develpoer
-Muhammad Figo Razzan Fadillah as Client App
-Dimas Bratakusuma As Server App
+FLEX is a news app that delivers the latest, fresh, and exclusive information across various fields. With a simple and user-friendly interface, FLEX allows users to stay updated with real-time news, anytime and anywhere. The app provides multiple news categories tailored to the user's interests, offering relevant and up-to-date insights. With personalized features and notifications, FLEX ensures that users receive the most important and engaging content at all times.
+## Developer :
+### Muhammad Figo Razzan Fadillah as Client App
+### Dimas Bratakusuma As Server App
 
