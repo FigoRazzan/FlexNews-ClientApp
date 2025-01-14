@@ -1,16 +1,7 @@
-# flexnews
+# FLEX  
+## Fresh Latest Exclusive
+FLEX is a news app that delivers the latest, fresh, and exclusive information across various fields. With a simple and user-friendly interface, FLEX allows users to stay updated with real-time news, anytime and anywhere. The app provides multiple news categories tailored to the user's interests, offering relevant and up-to-date insights. With personalized features and notifications, FLEX ensures that users receive the most important and engaging content at all times.
+## Developer :
+### Muhammad Figo Razzan Fadillah as Client App
+### Dimas Bratakusuma As Server App
 
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
