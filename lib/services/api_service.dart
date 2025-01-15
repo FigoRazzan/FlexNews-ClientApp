@@ -2,14 +2,14 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class ApiService {
-  final String publicApiUrl =
-      'https://api-berita-indonesia.vercel.app/antara/terbaru/';
+  final String baseUrl = 'https://api-berita-indonesia.vercel.app/';
 
-  Future<List<dynamic>> fetchPublicData() async {
-    final response = await http.get(Uri.parse(publicApiUrl));
+  Future<List<dynamic>> fetchPublicData(
+      {required String media, required String category}) async {
+    final String apiUrl = '$baseUrl/$media/$category/';
+    final response = await http.get(Uri.parse(apiUrl));
     if (response.statusCode == 200) {
       final Map<String, dynamic> json = jsonDecode(response.body);
-      // Ambil data dari properti 'posts'
       return json['data']['posts'];
     } else {
       throw Exception('Failed to load data');

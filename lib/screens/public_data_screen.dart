@@ -1,9 +1,87 @@
 import 'package:flutter/material.dart';
-import 'package:flexnews/screens/webview_screen.dart';
-import '../services/api_service.dart';
+import '../screens/public_screen/terbaru.dart';
 
-class PublicDataScreen extends StatelessWidget {
-  final ApiService apiService = ApiService();
+class PublicDataScreen extends StatefulWidget {
+  @override
+  _PublicDataScreenState createState() => _PublicDataScreenState();
+}
+
+class _PublicDataScreenState extends State<PublicDataScreen> {
+  final Map<String, List<String>> mediaCategories = {
+    'Antara': [
+      'terbaru',
+      'politik',
+      'hukum',
+      'ekonomi',
+      'bola',
+      'olahraga',
+      'humaniora',
+      'lifestyle',
+      'hiburan',
+      'dunia',
+      'tekno',
+      'otomotif'
+    ],
+    'CNBC': [
+      'terbaru',
+      'investment',
+      'news',
+      'market',
+      'entrepreneur',
+      'syariah',
+      'tech',
+      'lifestyle',
+      'opini',
+      'profil'
+    ],
+    'CNN': [
+      'terbaru',
+      'nasional',
+      'internasional',
+      'ekonomi',
+      'olahraga',
+      'teknologi',
+      'hiburan',
+      'gayahidup'
+    ],
+    'JPNN': ['terbaru'],
+    'Kumparan': ['terbaru'],
+    'Merdeka': [
+      'terbaru',
+      'jakarta',
+      'dunia',
+      'gaya',
+      'olahraga',
+      'teknologi',
+      'otomotif',
+      'khas',
+      'sehat',
+      'jateng'
+    ],
+    'Okezone': [
+      'terbaru',
+      'celebrity',
+      'sports',
+      'otomotif',
+      'economy',
+      'techno',
+      'lifestyle',
+      'bola'
+    ],
+    'Republika': [
+      'terbaru',
+      'news',
+      'daerah',
+      'khazanah',
+      'islam',
+      'internasional',
+      'bola',
+      'leisure'
+    ],
+  };
+
+  String? selectedMedia;
+  String? selectedCategory;
 
   @override
   Widget build(BuildContext context) {
@@ -11,115 +89,117 @@ class PublicDataScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text('Public Data'),
       ),
-      body: FutureBuilder(
-        future: apiService.fetchPublicData(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
-          } else {
-            final data = snapshot.data as List;
-            return ListView.builder(
-              itemCount: data.length,
-              itemBuilder: (context, index) {
-                final post = data[index];
-                final title = post['title'] ?? 'No Title';
-                final description = post['description'] ?? 'No Description';
-                final imageUrl = post['image'] ?? ''; // URL gambar
-                final link = post['link'] ?? '';
-
-                return GestureDetector(
-                  onTap: () {
-                    if (link.isNotEmpty) {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => WebViewScreen(url: link),
-                        ),
-                      );
-                    } else {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('No link available')),
-                      );
-                    }
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Pilih Media:',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(height: 8),
+                DropdownButton<String>(
+                  value: selectedMedia,
+                  hint: Text('Pilih Media'),
+                  isExpanded: true,
+                  items: mediaCategories.keys.map((media) {
+                    return DropdownMenuItem(
+                      value: media,
+                      child: Text(media),
+                    );
+                  }).toList(),
+                  onChanged: (value) {
+                    setState(() {
+                      selectedMedia = value;
+                      selectedCategory =
+                          null; // Reset kategori saat media berubah
+                    });
                   },
-                  child: Container(
-                    margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                    padding: EdgeInsets.all(12),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(8),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.3),
-                          spreadRadius: 2,
-                          blurRadius: 5,
+                ),
+                SizedBox(height: 16),
+                if (selectedMedia != null) ...[
+                  Text(
+                    'Pilih Kategori:',
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(height: 8),
+                  DropdownButton<String>(
+                    value: selectedCategory,
+                    hint: Text('Pilih Kategori'),
+                    isExpanded: true,
+                    items: mediaCategories[selectedMedia!]!.map((category) {
+                      return DropdownMenuItem(
+                        value: category,
+                        child: Text(category),
+                      );
+                    }).toList(),
+                    onChanged: (value) {
+                      setState(() {
+                        selectedCategory = value;
+                      });
+                    },
+                  ),
+                ],
+              ],
+            ),
+          ),
+          SizedBox(height: 16),
+          Expanded(
+            child: Center(
+              child: GestureDetector(
+                onTap: () {
+                  if (selectedMedia != null && selectedCategory != null) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => TerbaruScreen(
+                          media: selectedMedia!.toLowerCase(),
+                          category: selectedCategory!,
                         ),
-                      ],
-                    ),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(8),
-                          child: imageUrl.isNotEmpty
-                              ? Image.network(
-                                  imageUrl,
-                                  height: 80,
-                                  width: 80,
-                                  fit: BoxFit.cover,
-                                  errorBuilder: (context, error, stackTrace) {
-                                    return Image.asset(
-                                      'assets/splash_screens_2.png',
-                                      height: 80,
-                                      width: 80,
-                                      fit: BoxFit.cover,
-                                    );
-                                  },
-                                )
-                              : Image.asset(
-                                  'assets/splash_screens_2.png',
-                                  height: 80,
-                                  width: 80,
-                                  fit: BoxFit.cover,
-                                ),
-                        ),
-                        SizedBox(width: 12),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                title,
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                              SizedBox(height: 8),
-                              Text(
-                                description,
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  color: Colors.grey[700],
-                                ),
-                                maxLines: 3,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
+                      ),
+                    );
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content:
+                            Text('Pilih media dan kategori terlebih dahulu!'),
+                      ),
+                    );
+                  }
+                },
+                child: Container(
+                  margin: EdgeInsets.all(16),
+                  padding: EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: Colors.blue,
+                    borderRadius: BorderRadius.circular(12),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        blurRadius: 5,
+                        offset: Offset(0, 3),
+                      ),
+                    ],
+                  ),
+                  child: Center(
+                    child: Text(
+                      'Lihat Data',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
-                );
-              },
-            );
-          }
-        },
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
