@@ -87,7 +87,7 @@ class _PublicDataScreenState extends State<PublicDataScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Public Data'),
+        title: Text('Public News'),
         backgroundColor: Colors.grey[200],
       ),
       backgroundColor: Colors.grey[200], // Background color for the scaffold
@@ -232,7 +232,7 @@ class _PublicDataScreenState extends State<PublicDataScreen> {
                     ),
                     child: Center(
                       child: Text(
-                        'Lihat Data',
+                        'Lihat Berita',
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 18,

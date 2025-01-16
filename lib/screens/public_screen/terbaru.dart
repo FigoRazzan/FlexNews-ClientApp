@@ -34,7 +34,6 @@ class _TerbaruScreenState extends State<TerbaruScreen> {
         category: widget.category,
       );
 
-      // Load likes and comments from database for each post
       final updatedData = await Future.wait(data.map((post) async {
         final likes = await dbHelper.getLikes(post['link']);
         final comments = await dbHelper.getComments(post['link']);
@@ -318,173 +317,210 @@ class _TerbaruScreenState extends State<TerbaruScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey[200],
       appBar: AppBar(
+        backgroundColor: Colors.grey[200],
+        elevation: 0,
         title: Text('Berita: ${widget.media} / ${widget.category}'),
-        bottom: PreferredSize(
-          preferredSize: Size.fromHeight(50),
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextField(
-              onChanged: _filterData,
-              decoration: InputDecoration(
-                hintText: 'Cari berita...',
-                prefixIcon: Icon(Icons.search),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: BorderSide.none,
-                ),
-                filled: true,
-                fillColor: Colors.white,
-              ),
-            ),
+      ),
+      body: Container(
+        margin: EdgeInsets.only(top: 16),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(30),
+            topRight: Radius.circular(30),
           ),
         ),
-      ),
-      body: filteredData.isEmpty
-          ? Center(child: Text('Tidak ada berita yang ditemukan'))
-          : ListView.builder(
-              itemCount: filteredData.length,
-              itemBuilder: (context, index) {
-                final post = filteredData[index];
-                final title = post['title'] ?? 'No Title';
-                final description = post['description'] ?? 'No Description';
-                final imageUrl = post['thumbnail'] ?? '';
-                final link = post['link'] ?? '';
-                final likes = post['likes'];
-                final comments = post['comments'];
+        child: Column(
+          children: [
+            // Search Bar
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 20, 16, 8),
+              child: TextField(
+                onChanged: _filterData,
+                decoration: InputDecoration(
+                  hintText: 'Cari berita...',
+                  prefixIcon: Icon(Icons.search),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide(color: Colors.grey[300]!),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide(color: Colors.grey[300]!),
+                  ),
+                  filled: true,
+                  fillColor: Colors.grey[50],
+                ),
+              ),
+            ),
 
-                return GestureDetector(
-                  onTap: () {
-                    if (link.isNotEmpty) {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => WebViewScreen(url: link),
-                        ),
-                      );
-                    } else {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('No link available')),
-                      );
-                    }
-                  },
-                  child: Container(
-                    margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                    padding: EdgeInsets.all(12),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(8),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.3),
-                          spreadRadius: 2,
-                          blurRadius: 5,
-                        ),
-                      ],
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            ClipRRect(
+            // News List
+            Expanded(
+              child: filteredData.isEmpty
+                  ? Center(child: Text('Tidak ada berita yang ditemukan'))
+                  : ListView.builder(
+                      padding: EdgeInsets.all(16),
+                      itemCount: filteredData.length,
+                      itemBuilder: (context, index) {
+                        final post = filteredData[index];
+                        final title = post['title'] ?? 'No Title';
+                        final description =
+                            post['description'] ?? 'No Description';
+                        final imageUrl = post['thumbnail'] ?? '';
+                        final link = post['link'] ?? '';
+                        final likes = post['likes'];
+                        final comments = post['comments'];
+
+                        return GestureDetector(
+                          onTap: () {
+                            if (link.isNotEmpty) {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      WebViewScreen(url: link),
+                                ),
+                              );
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text('No link available')),
+                              );
+                            }
+                          },
+                          child: Container(
+                            margin: EdgeInsets.only(bottom: 16),
+                            padding: EdgeInsets.all(12),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
                               borderRadius: BorderRadius.circular(8),
-                              child: imageUrl.isNotEmpty
-                                  ? Image.network(
-                                      imageUrl,
-                                      height: 80,
-                                      width: 80,
-                                      fit: BoxFit.cover,
-                                    )
-                                  : Image.asset(
-                                      'assets/splash_screens_2.png',
-                                      height: 80,
-                                      width: 80,
-                                      fit: BoxFit.cover,
-                                    ),
-                            ),
-                            SizedBox(width: 12),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    title,
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                    maxLines: 2,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                  SizedBox(height: 8),
-                                  Text(
-                                    description,
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      color: Colors.grey[700],
-                                    ),
-                                    maxLines: 3,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                ],
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.15),
+                                  spreadRadius: 1,
+                                  blurRadius: 3,
+                                  offset: Offset(0, 1),
+                                ),
+                              ],
+                              border: Border.all(
+                                color: Colors.grey[100]!,
+                                width: 1,
                               ),
                             ),
-                          ],
-                        ),
-                        SizedBox(height: 8),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                IconButton(
-                                  icon: Icon(Icons.thumb_up),
-                                  onPressed: () => _likePost(index),
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(8),
+                                      child: imageUrl.isNotEmpty
+                                          ? Image.network(
+                                              imageUrl,
+                                              height: 80,
+                                              width: 80,
+                                              fit: BoxFit.cover,
+                                            )
+                                          : Image.asset(
+                                              'assets/splash_screens_2.png',
+                                              height: 80,
+                                              width: 80,
+                                              fit: BoxFit.cover,
+                                            ),
+                                    ),
+                                    SizedBox(width: 12),
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            title,
+                                            style: TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                            maxLines: 2,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                          SizedBox(height: 8),
+                                          Text(
+                                            description,
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                              color: Colors.grey[700],
+                                            ),
+                                            maxLines: 3,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                                Text('$likes Likes'),
+                                SizedBox(height: 8),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        IconButton(
+                                          icon: Icon(Icons.thumb_up),
+                                          onPressed: () => _likePost(index),
+                                        ),
+                                        Text('$likes Likes'),
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [
+                                        IconButton(
+                                          icon: Icon(Icons.comment),
+                                          onPressed: () =>
+                                              _showCommentsModal(index),
+                                        ),
+                                        Text('${comments.length} Comments'),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                                if (comments.isNotEmpty) ...[
+                                  Divider(),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children:
+                                        comments.take(5).map<Widget>((comment) {
+                                      return Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 4.0),
+                                        child: Text('- $comment'),
+                                      );
+                                    }).toList(),
+                                  ),
+                                  if (comments.length > 5)
+                                    TextButton(
+                                      onPressed: () {
+                                        setState(() {
+                                          filteredData[index]
+                                              ['showAllComments'] = true;
+                                        });
+                                      },
+                                      child: Text('Lihat lebih banyak'),
+                                    ),
+                                ],
                               ],
                             ),
-                            Row(
-                              children: [
-                                IconButton(
-                                  icon: Icon(Icons.comment),
-                                  onPressed: () => _showCommentsModal(index),
-                                ),
-                                Text('${comments.length} Comments'),
-                              ],
-                            ),
-                          ],
-                        ),
-                        if (comments.isNotEmpty) ...[
-                          Divider(),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: comments.take(5).map<Widget>((comment) {
-                              return Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 4.0),
-                                child: Text('- $comment'),
-                              );
-                            }).toList(),
                           ),
-                          if (comments.length > 5)
-                            TextButton(
-                              onPressed: () {
-                                setState(() {
-                                  filteredData[index]['showAllComments'] = true;
-                                });
-                              },
-                              child: Text('Lihat lebih banyak'),
-                            ),
-                        ],
-                      ],
+                        );
+                      },
                     ),
-                  ),
-                );
-              },
             ),
+          ],
+        ),
+      ),
     );
   }
 }

@@ -72,15 +72,15 @@ class AboutScreen extends StatelessWidget {
                         nrp: '152022064',
                         email: 'figorazzan10@gmail.com',
                         imagePath: 'assets/foto_figo.jpg',
-                        waveColor: Colors.deepOrange.shade800,
+                        waveColor: Colors.black,
                       ),
                       SizedBox(height: 16),
                       ProfileContainer(
-                        name: 'Dimas Bratakusuma',
+                        name: 'Dimas Bratakusumah',
                         nrp: '152022044',
                         email: 'dimas@gmail.com',
                         imagePath: 'assets/foto_dimas.jpg',
-                        waveColor: Colors.blue.shade800,
+                        waveColor: Colors.black,
                       ),
                     ],
                   ),
@@ -217,7 +217,7 @@ class WavePainter extends CustomPainter {
     // First wave
     path.quadraticBezierTo(
       size.width * 0.25,
-      size.height * 0.6,
+      size.height * 0.7,
       size.width * 0.5,
       size.height * 0.35,
     );
