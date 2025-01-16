@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "743809226230",
+    "project_id": "flexnews-dc855",
+    "storage_bucket": "flexnews-dc855.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:743809226230:android:22213fae30561f177523d7",
+        "android_client_info": {
+          "package_name": "com.example.flex_server"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBVEsOJSgenuvXdeA0nJkcVhGpqT05EIa0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:743809226230:android:e301dbf24e50d8817523d7",
+        "android_client_info": {
+          "package_name": "com.example.flexnews"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBVEsOJSgenuvXdeA0nJkcVhGpqT05EIa0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

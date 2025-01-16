@@ -5,20 +5,25 @@ class AboutScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('About US'),
-        backgroundColor: Colors.grey[200],
+        title: Text(
+          'About Us',
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: Colors.black,
         elevation: 0,
       ),
-      backgroundColor: Colors.grey[200],
+      backgroundColor: Colors.black, // Background color hitam
       body: SingleChildScrollView(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            // Container for About and Developers Section
+            // Container 1: Logo and Description
             Container(
+              padding: EdgeInsets.symmetric(vertical: 24, horizontal: 16),
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.vertical(
-                  top: Radius.circular(60),
+                  bottom: Radius.circular(30),
                 ),
                 boxShadow: [
                   BoxShadow(
@@ -31,58 +36,125 @@ class AboutScreen extends StatelessWidget {
               ),
               child: Column(
                 children: [
-                  SizedBox(height: 24),
-                  // Application Logo and Description
-                  Column(
-                    children: [
-                      Image.asset(
-                        'assets/splash_screens_2.png',
-                        width: 100,
-                        height: 100,
-                      ),
-                      SizedBox(height: 16),
-                      Text(
-                        'FLEX',
-                        style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black87,
-                        ),
-                      ),
-                      SizedBox(height: 16),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 24.0),
-                        child: Text(
-                          'FLEX adalah aplikasi berita yang menyajikan informasi terbaru, segar, dan eksklusif dari berbagai bidang. Dengan tampilan yang simpel dan mudah digunakan, FLEX memungkinkan pengguna untuk mendapatkan berita secara real-time dan fleksibel, kapan saja dan di mana saja. Aplikasi ini menyediakan berbagai kategori berita yang dapat disesuaikan dengan minat pengguna, memberikan wawasan yang relevan dan up-to-date. Dengan fitur personalisasi dan notifikasi, FLEX memastikan setiap informasi yang diterima adalah yang paling penting dan menarik untuk Anda.',
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.black54,
-                          ),
-                          textAlign: TextAlign.justify,
-                        ),
-                      ),
-                    ],
+                  Image.asset(
+                    'assets/splash_screens_2.png',
+                    width: 120,
+                    height: 120,
                   ),
                   SizedBox(height: 16),
-                  // Developers Section
-                  Column(
-                    children: [
-                      ProfileContainer(
-                        name: 'Muhammad Figo Razzan Fadillah',
-                        nrp: '152022064',
-                        email: 'figorazzan10@gmail.com',
-                        imagePath: 'assets/foto_figo.jpg',
-                        waveColor: Colors.black,
+                  Text(
+                    'FLEX',
+                    style: TextStyle(
+                      fontSize: 28,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
+                  ),
+                  SizedBox(height: 16),
+                  Text(
+                    'FLEX adalah aplikasi berita yang menyajikan informasi terbaru, '
+                    'segar, dan eksklusif dari berbagai bidang. Dengan tampilan yang '
+                    'simpel dan mudah digunakan, FLEX memungkinkan pengguna untuk '
+                    'mendapatkan berita secara real-time dan fleksibel.',
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.black54,
+                      height: 1.5,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: 16),
+
+            // Container 2: YouTube Link
+            Container(
+              padding: EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+              margin: EdgeInsets.symmetric(horizontal: 16),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(20),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.3),
+                    spreadRadius: 2,
+                    blurRadius: 5,
+                    offset: Offset(0, 3),
+                  ),
+                ],
+              ),
+              child: Column(
+                children: [
+                  Text(
+                    'Video Demo App',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black87,
+                    ),
+                  ),
+                  SizedBox(height: 16),
+                  ElevatedButton.icon(
+                    onPressed: () {
+                      // Handle YouTube link action
+                    },
+                    icon: Icon(Icons.play_arrow),
+                    label: Text('Visit YouTube'),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.red,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
                       ),
-                      SizedBox(height: 16),
-                      ProfileContainer(
-                        name: 'Dimas Bratakusumah',
-                        nrp: '152022044',
-                        email: 'dimas@gmail.com',
-                        imagePath: 'assets/foto_dimas.jpg',
-                        waveColor: Colors.black,
-                      ),
-                    ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: 16),
+
+            // Container 3: Developers
+            Container(
+              padding: EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.vertical(
+                  top: Radius.circular(30),
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.3),
+                    spreadRadius: 2,
+                    blurRadius: 5,
+                    offset: Offset(0, 3),
+                  ),
+                ],
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Text(
+                    'Developers',
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black87,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  SizedBox(height: 16),
+                  ProfileContainer(
+                    name: 'Muhammad Figo Razzan Fadillah',
+                    nrp: '152022064',
+                    email: 'figorazzan10@gmail.com',
+                    imagePath: 'assets/foto_figo.jpg',
+                  ),
+                  SizedBox(height: 16),
+                  ProfileContainer(
+                    name: 'Dimas Bratakusumah',
+                    nrp: '152022044',
+                    email: 'dimas@gmail.com',
+                    imagePath: 'assets/foto_dimas.jpg',
                   ),
                 ],
               ),
@@ -99,7 +171,6 @@ class ProfileContainer extends StatelessWidget {
   final String nrp;
   final String email;
   final String imagePath;
-  final Color waveColor;
 
   const ProfileContainer({
     Key? key,
@@ -107,72 +178,46 @@ class ProfileContainer extends StatelessWidget {
     required this.nrp,
     required this.email,
     required this.imagePath,
-    required this.waveColor,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      height: 350,
-      child: Stack(
+      padding: EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.3),
+            spreadRadius: 2,
+            blurRadius: 5,
+            offset: Offset(0, 3),
+          ),
+        ],
+      ),
+      child: Row(
         children: [
-          // Background Container with border radius
-          Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(20),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.3),
-                  spreadRadius: 2,
-                  blurRadius: 5,
-                  offset: Offset(0, 3),
-                ),
-              ],
-            ),
+          // Profile Picture
+          CircleAvatar(
+            radius: 40,
+            backgroundImage: AssetImage(imagePath),
           ),
-          // Wave Decoration
-          ClipRRect(
-            borderRadius: BorderRadius.circular(20),
-            child: CustomPaint(
-              size: Size(double.infinity, 300),
-              painter: WavePainter(waveColor),
-            ),
-          ),
-          // Profile Content
-          Center(
+          SizedBox(width: 16),
+          // Profile Details
+          Expanded(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Profile Picture
-                Container(
-                  width: 100,
-                  height: 100,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(
-                      color: Colors.white,
-                      width: 3,
-                    ),
-                    image: DecorationImage(
-                      image: AssetImage(imagePath),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-                SizedBox(height: 16),
-                // Name
                 Text(
                   name,
                   style: TextStyle(
-                    fontSize: 24,
+                    fontSize: 20,
                     fontWeight: FontWeight.bold,
                     color: Colors.black87,
                   ),
                 ),
                 SizedBox(height: 8),
-                // NRP
                 Text(
                   'NRP: $nrp',
                   style: TextStyle(
@@ -181,12 +226,11 @@ class ProfileContainer extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 4),
-                // Email
                 Text(
                   email,
                   style: TextStyle(
                     fontSize: 16,
-                    color: Colors.black54,
+                    color: Colors.blueAccent,
                   ),
                 ),
               ],
@@ -196,47 +240,4 @@ class ProfileContainer extends StatelessWidget {
       ),
     );
   }
-}
-
-class WavePainter extends CustomPainter {
-  final Color waveColor;
-
-  WavePainter(this.waveColor);
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final paint = Paint()
-      ..color = waveColor
-      ..style = PaintingStyle.fill;
-
-    final path = Path();
-
-    // Starting point
-    path.moveTo(0, 0);
-
-    // First wave
-    path.quadraticBezierTo(
-      size.width * 0.25,
-      size.height * 0.7,
-      size.width * 0.5,
-      size.height * 0.35,
-    );
-
-    // Second wave
-    path.quadraticBezierTo(
-      size.width * 0.75,
-      size.height * 0.4,
-      size.width,
-      size.height * 0.7,
-    );
-
-    // Complete the shape
-    path.lineTo(size.width, 0);
-    path.close();
-
-    canvas.drawPath(path, paint);
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }

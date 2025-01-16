@@ -3,6 +3,7 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 import 'public_data_screen.dart';
 import 'about_screen.dart';
 import 'hot_topic.dart';
+import '../components/firestore_news_list.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -13,11 +14,16 @@ class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
 
   final List<Widget> _pages = [
+    Scaffold(
+      appBar: AppBar(
+        title: Text('FLEX News'),
+        backgroundColor: Colors.black,
+        foregroundColor: Colors.white,
+      ),
+      body: FirestoreNewsList(),
+    ),
     PublicDataScreen(),
-    HotTopicScreen(), // Halaman Hot Topics
-    Center(
-        child: Text('Admin Page',
-            style: TextStyle(fontSize: 24))), // Placeholder Admin Page
+    HotTopicScreen(),
     AboutScreen(),
   ];
 
@@ -26,15 +32,14 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       body: _pages[_selectedIndex],
       bottomNavigationBar: Container(
-        color: Colors.black, // Warna background navbar
+        color: Colors.black,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
           child: GNav(
             backgroundColor: Colors.black,
-            color: Colors.white, // Warna icon dan teks (default)
-            activeColor: Colors.black, // Warna aktif (untuk icon & teks aktif)
-            tabBackgroundColor:
-                Colors.white.withOpacity(0.5), // Transparansi warna saat aktif
+            color: Colors.white,
+            activeColor: Colors.black,
+            tabBackgroundColor: Colors.white.withOpacity(0.5),
             gap: 8,
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
             onTabChange: (index) {
@@ -44,16 +49,16 @@ class _HomeScreenState extends State<HomeScreen> {
             },
             tabs: const [
               GButton(
+                icon: Icons.newspaper,
+                text: 'FLEX',
+              ),
+              GButton(
                 icon: Icons.public,
                 text: 'Public News',
               ),
               GButton(
                 icon: Icons.whatshot,
                 text: 'Hot Topics',
-              ),
-              GButton(
-                icon: Icons.admin_panel_settings,
-                text: 'Admin',
               ),
               GButton(
                 icon: Icons.info,
